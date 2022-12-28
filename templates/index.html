@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+	<header class="py-5">
+		<div class="container px-5">
+		<div class="row gx-5 align-items-center justify-content-center">
+			<div class="col-lg-8 col-xl-7 col-xxl-6">
+			<div class="my-5 text-center text-xl-start">
+				<h1 class="display-5 fw-bolder mb-2">BRENT CRUDE OIL PRICE</h1>
+				<p class="lead fw-normal mb-4">Past, Present and Future Prices of Brent Crude Oil</p>
+				<div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+					<a class="btn btn-primary btn-lg px-4 me-sm-3" href="#price">Price</a>
+					<a class="btn btn-primary btn-lg px-4 me-sm-3" href="#prediction">Prediction</a>
+				</div>
+			</div>
+			</div>
+			<div class="col-xl-5 col-xxl-6 text-center">
+				<img class="img-fluid rounded-3 my-5" src="{{ url_for('static', filename='6193706.jpg') }}"/>
+			</div>
+		</div>
+		</div>
+	</header>
+
+	<section class="py-5" id="price">
+		<div class="container">
+			<h1 class="fw-bolder text-center mb-5">BRENT CRUDE OIL PRICE</h1>
+			<div class="scrollme"> 
+				<table class="table table-responsive">
+					<thead>
+                        <tr>
+                            {% for col in column_names %}
+                            <th>{{col}}</th>
+                            {% endfor %}
+                        </tr>
+					</thead>
+					<tbody>
+                        {% for row in row_data %}
+                        <tr>
+                            {% for col, row_ in zip(column_names, row) %}
+                                <td>{{row_}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+	<section class="py-5" id="prediction">
+		<div class="container">
+			<div class="text-center mb-5">
+				<h1 class="fw-bolder">BRENT CRUDE OIL PRICE PREDICTION</h1>
+			  </div>
+			<div class="row">
+                <div class="col-lg-6 mb-5">
+					<h4 class="mb-3">ACTUAL VS PREDICTION</h4>
+					<img src="data:image/png;base64, {{ prediksivsactual }}" 
+						alt="" width="650" class="img-fluid">
+					<!--end card -->
+				</div>
+				<!--end column -->
+				
+				<div class="col-lg-6">
+					<h4 class="mb-3">PRICE PREDICTION FOR 7 DAYS</h4>
+					<img src="data:image/png;base64, {{ prediksi30 }}" 
+						alt="" width="650" class="img-fluid">
+				</div>
+				<!--end column -->
+			</div>
+			<!--end row -->
+
+			<div class="row mt-3">
+				<div class="col-lg-3 p-20 mb-3">
+					<div class="card bg-danger">
+						<div class="card-body text-end mb-4">
+							{% for item in actual_today%}
+								<h2 class="color-white text-white">{{ item | round(3) }}</h2>
+							{% endfor %}
+							<p class="text-white">TODAY'S ACTUAL CLOSING PRICE</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-3 p-20 mb-3">
+					<div class="card bg-success">
+						<div class="card-body text-end">
+							{% for item in prediction_today%}
+								<h2 class="color-white text-white">{{ item | round(3)}}</h2>
+							{% endfor %}
+							<p class="m-b-0 text-white">TODAY'S CLOSING PRICE PREDICTION</p>
+						</div>
+					</div>
+				</div>
+				<!--end column -->
+
+				<div class="col-lg-3 p-20 mb-3">
+					<div class="card bg-warning">
+						<div class="card-body text-end mb-4">
+							<h2 class="color-white text-white">{{ rmse | round(3)}}</h2>
+							<p class="m-b-0 text-white">ARIMA RMSE</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-3 p-20">
+					<div class="card bg-primary">
+						<div class="card-body text-end">
+							{% for item in prediction_tomorrow1%}
+									<h2 class="color-white text-white">{{ item | round(3)}}</h2>
+							{% endfor %}
+							<p class="m-b-0 text-white">TOMORROW'S CLOSING PRICE PREDICTION</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row mt-5">
+				<div class="col-lg-6">
+					<h4>PREDICTED PRICE FOR THE NEXT 7 DAYS</h4>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Close</th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<td>
+								<img src="{{ url_for('static', filename='forecasting.png') }}"></img>
+							</td>
+							<td>
+								{% for item in prediction_tomorrow7%}
+									<p>{{ item | round(3)}}</p>
+								{% endfor %}
+							</td>
+							<td></td>
+							<td></td>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+
+		</div>
+	</section>
+{% endblock %}
