@@ -6,8 +6,8 @@
 		<div class="row gx-5 align-items-center justify-content-center">
 			<div class="col-lg-8 col-xl-7 col-xxl-6">
 			<div class="my-5 text-center text-xl-start">
-				<h1 class="display-5 fw-bolder mb-2">BRENT CRUDE OIL PRICE</h1>
-				<p class="lead fw-normal mb-4">Past, Present and Future Prices of Brent Crude Oil</p>
+				<h1 class="display-5 fw-bolder mb-2">CRUDE OIL PRICE</h1>
+				<p class="lead fw-normal mb-4">Past, Present and Future Prices of Crude Oil</p>
 				<div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
 					<a class="btn btn-primary btn-lg px-4 me-sm-3" href="#price">Price</a>
 					<a class="btn btn-primary btn-lg px-4 me-sm-3" href="#prediction">Prediction</a>
@@ -23,7 +23,7 @@
 
 	<section class="py-5" id="price">
 		<div class="container">
-			<h1 class="fw-bolder text-center mb-5">BRENT CRUDE OIL PRICE</h1>
+			<h1 class="fw-bolder text-center mb-5">CRUDE OIL PRICE</h1>
 			<div class="scrollme"> 
 				<table class="table table-responsive">
 					<thead>
@@ -52,7 +52,7 @@
 		<div class="container">
 			<div class="text-center mb-5">
 				<h1 class="fw-bolder">BRENT CRUDE OIL PRICE PREDICTION</h1>
-			  </div>
+			</div>
 			<div class="row">
                 <div class="col-lg-6 mb-5">
 					<h4 class="mb-3">ACTUAL VS PREDICTION</h4>
@@ -71,54 +71,61 @@
 			</div>
 			<!--end row -->
 
-			<div class="row mt-3">
-				<div class="col-lg-3 p-20 mb-3">
-					<div class="card bg-danger">
-						<div class="card-body text-end mb-4">
-							{% for item in actual_today%}
-								<h2 class="color-white text-white">{{ item | round(3) }}</h2>
-							{% endfor %}
-							<p class="text-white">TODAY'S ACTUAL CLOSING PRICE</p>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="row mt-3">
+						<div class="col p-20 mb-3">
+							<div class="card bg-danger">
+								<div class="card-body text-end mb-4">
+									{% for item in actual_today%}
+										<h2 class="color-white text-white">{{ item | round(3) }}</h2>
+									{% endfor %}
+									<p class="text-white">TODAY'S ACTUAL CLOSING PRICE</p>
+								</div>
+							</div>
 						</div>
+		
+						<div class="col p-20 mb-3">
+							<div class="card bg-success">
+								<div class="card-body text-end">
+									{% for item in prediction_today%}
+										<h2 class="color-white text-white">{{ item | round(3)}}</h2>
+									{% endfor %}
+									<p class="m-b-0 text-white">TODAY'S CLOSING PRICE PREDICTION</p>
+								</div>
+							</div>
+						</div>
+						<!--end column -->
 					</div>
-				</div>
 
-				<div class="col-lg-3 p-20 mb-3">
-					<div class="card bg-success">
-						<div class="card-body text-end">
-							{% for item in prediction_today%}
-								<h2 class="color-white text-white">{{ item | round(3)}}</h2>
-							{% endfor %}
-							<p class="m-b-0 text-white">TODAY'S CLOSING PRICE PREDICTION</p>
+					<div class="row mt-3">
+						<div class="col p-20 mb-3">
+							<div class="card bg-warning">
+								<div class="card-body text-end mb-4">
+									<h2 class="color-white text-white">{{ rmse | round(3)}}</h2>
+									<p class="m-b-0 text-white">ARIMA RMSE</p>
+								</div>
+							</div>
 						</div>
+		
+						<div class="col p-20 mb-3">
+							<div class="card bg-primary">
+								<div class="card-body text-end">
+									{% for item in prediction_tomorrow1%}
+											<h2 class="color-white text-white">{{ item | round(3)}}</h2>
+									{% endfor %}
+									<p class="m-b-0 text-white">TOMORROW'S CLOSING PRICE PREDICTION</p>
+								</div>
+							</div>
+						</div>
+						<!--end column -->
 					</div>
 				</div>
 				<!--end column -->
 
-				<div class="col-lg-3 p-20 mb-3">
-					<div class="card bg-warning">
-						<div class="card-body text-end mb-4">
-							<h2 class="color-white text-white">{{ rmse | round(3)}}</h2>
-							<p class="m-b-0 text-white">ARIMA RMSE</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-3 p-20">
-					<div class="card bg-primary">
-						<div class="card-body text-end">
-							{% for item in prediction_tomorrow1%}
-									<h2 class="color-white text-white">{{ item | round(3)}}</h2>
-							{% endfor %}
-							<p class="m-b-0 text-white">TOMORROW'S CLOSING PRICE PREDICTION</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="row mt-5">
-				<div class="col-lg-6">
+				<div class="col-lg-1"></div>
+				
+				<div class="col-lg-5">
 					<h4>PREDICTED PRICE FOR THE NEXT 7 DAYS</h4>
 					<table class="table">
 						<thead>
@@ -143,10 +150,9 @@
 						</tbody>
 					</table>
 				</div>
+				<!--end column -->
 			</div>
-
-
-
+			<!--end row -->
 		</div>
 	</section>
 {% endblock %}
