@@ -24,7 +24,7 @@ app = Flask(__name__)
 def hello():
     #Crawling Data
     today = date.today()
-    one_years = date.today() - relativedelta(months=+12)
+    one_years = date.today() - relativedelta(months=+36)
     df = yf.download('BZ=F', start=one_years, end=dt.datetime.now(), progress=False)
 
     #Untuk menampilkan data harga selama 2 minggu
