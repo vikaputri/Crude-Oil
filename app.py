@@ -36,7 +36,11 @@ def hello():
     del df['Open'], df['High'], df['Low'], df['Adj Close'], df['Volume']
 
     #Split Dataset
-    df_train, df_test = train_test_split(df, test_size = 0.10, train_size =0.90)
+    train_size = int(len(df) * 0.9)
+    test_size = len(df) - train_size
+    df_train = df.iloc[:train_size]
+    df_test = df.iloc[train_size:]
+    #df_train, df_test = train_test_split(df, test_size = 0.10, train_size =0.90)
 
     #Pemodelan
     model = auto_arima(df, start_p=0, d=0, start_q=0)
@@ -46,16 +50,8 @@ def hello():
     results = mod.fit()
 
     #Evaluasi dengan Visualisasi
-    try:
-        one_months = date.today() - relativedelta(days=+len(df_test))
-        pred = results.get_prediction(start=pd.to_datetime(one_months), dynamic=False)
-    except KeyError:
-        try :
-            one_months = date.today() - relativedelta(days=+len(df_test)-1)
-            pred = results.get_prediction(start=pd.to_datetime(one_months), dynamic=False)
-        except KeyError:
-            one_months = date.today() - relativedelta(days=+len(df_test)-2)
-            pred = results.get_prediction(start=pd.to_datetime(one_months), dynamic=False)
+    one_months = date.today() - relativedelta(days=+len(df_test))
+    pred = results.get_prediction(start=pd.to_datetime(one_months), dynamic=False)
     
     pred_ci = pred.conf_int()
     hasil = pred.predicted_mean
